@@ -61,6 +61,13 @@ get '/meetups/:id' do
   erb :'meetups/show'
 end
 
+get '/meetups' do
+  @meetups = Meetup.order(name: :asc)
+
+  erb :'/meetups/index'
+end
+
+
 
 
 
