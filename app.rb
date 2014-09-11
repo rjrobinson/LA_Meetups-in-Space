@@ -55,19 +55,35 @@ get '/example_protected_page' do
 end
 
 
+get '/meetups' || '/meetups/' do
+  @meetups = Meetup.order(name: :asc)
+
+  erb :'/meetups/index'
+end
+
+get '/meetups/new' do
+
+  erb :'/meetups/new'
+end
+
 get '/meetups/:id' do
   @meetup = Meetup.find(params[:id])
 
   erb :'meetups/show'
 end
 
-get '/meetups' do
-  @meetups = Meetup.order(name: :asc)
+post '/meetups' do
 
-  erb :'/meetups/index'
+  @meetup = Meetup.new(params[:meetup])
+
+  if @meetup.save
+    redirect "/meetups/#{@meetup.id}"
+  else
+    flash[:notice] = "Something went wrong. Fix it."
+    render :'/meetups/new'
+  end
+
 end
-
-
 
 
 

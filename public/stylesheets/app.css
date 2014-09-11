@@ -38,3 +38,25 @@ a:visited {
   padding: 1em;
   background-color: #3B9089;
 }
+form {
+  color: black;
+}
+
+label {
+  color: white;
+  display: block;
+}
+
+.form-input-wrapper {
+  margin-bottom: 1em;
+}
+
+
+
+
+
+
+
+
+
+
