@@ -1,3 +1,7 @@
+#######################
+    #Requirements
+#######################
+
 require 'sinatra'
 require 'sinatra/activerecord'
 require 'sinatra/flash'
@@ -6,6 +10,12 @@ require 'omniauth-github'
 require_relative 'config/application'
 
 Dir['app/**/*.rb'].each { |file| require_relative file }
+
+
+#######################
+    #Methods
+#######################
+
 
 helpers do
   def current_user
@@ -28,6 +38,11 @@ def authenticate!
     redirect '/'
   end
 end
+
+
+#######################
+    #GET Requests
+#######################
 
 get '/' do
   erb :index
@@ -62,6 +77,7 @@ get '/meetups' || '/meetups/' do
 end
 
 get '/meetups/new' do
+  authenticate!
 
   erb :'/meetups/new'
 end
@@ -72,7 +88,13 @@ get '/meetups/:id' do
   erb :'meetups/show'
 end
 
+#######################
+    #POST Requests
+#######################
+
 post '/meetups' do
+
+  authenticate!
 
   @meetup = Meetup.new(params[:meetup])
 
