@@ -93,19 +93,32 @@ end
 #######################
 
 post '/meetups' do
-
   authenticate!
-
   @meetup = Meetup.new(params[:meetup])
-
   if @meetup.save
     redirect "/meetups/#{@meetup.id}"
   else
     flash[:notice] = "Something went wrong. Fix it."
     render :'/meetups/new'
   end
-
 end
+
+
+post '/meetups/:meetup_id/memberships' do
+  authenticate!
+  meetup = Meetup.find(params[:meetup_id])
+
+  @membership = Membership.new(user_id: current_user.id, meetup_id: meetup.id)
+
+  if @membership.save
+    flash[:notice] = "You have successfully joined the Meetup! "
+    redirect "/meetups/#{meetup.id}"
+  else
+    flash[:notice] = "There was an error, Please try again. "
+    redirect "/meetups/#{meetup.id}"
+  end
+end
+
 
 
 
